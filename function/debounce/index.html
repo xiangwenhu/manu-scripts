@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        #contaienr1, #contaienr2{
+            height: 200px;
+            width: 200px;     
+            background-color: red;    
+        }
+
+    
+        #contaienr2{
+            margin-top: 10px;
+            background-color: blue;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div id="contaienr1">
+
+    </div>
+
+
+    <div id="contaienr2">
+
+    </div>
+
+
+    <script src="./index.js"></script>
+    <script>
+
+        function onMouseMouse(ev){
+            console.log("resize", new Date().toLocaleTimeString());
+            return "onMouseMouse"
+        }
+
+        const resizeEvent = debounce(onMouseMouse, 1000, true)
+
+        setInterval(()=>{
+            var result =  resizeEvent();
+            console.log(new Date().toLocaleTimeString(), result);
+        }, 200)
+
+        window.addEventListener("resize", resizeEvent);
+
+    </script>
+</body>
+</html>
