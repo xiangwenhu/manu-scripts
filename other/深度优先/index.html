@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深度遍历</title>
+</head>
+
+<body>
+
+    <div id="deep" data-value="root">
+        <div data-value="child-1">
+            <div data-value="child-1-1">
+                <div data-value="child-1-1-1"></div>
+                <div data-value="child-1-1-2"></div>
+            </div>
+            <div data-value="child-1-2"></div>
+        </div>
+        <div data-value="child-2">
+            <div data-value="child-2-1"></div>
+            <div data-value="child-2-2"></div>
+        </div>
+    </div>
+
+
+    <script>
+        // 深度优先
+
+        var root = document.getElementById("deep");
+
+
+
+        class DeepWalk {
+            constructor(root) {
+                this.root = root;
+            }
+
+            getValue(el) {
+                return el.dataset.value;
+            }
+
+
+            printValue(el) {
+                if (el.dataset.print !== "1") {
+                    console.log(this.getValue(el));
+                    el.dataset.print = "1";
+                }
+            }
+
+            start() {
+                this.walk(this.root);
+            }
+
+            walk(el) {
+
+
+                if (el.children.length <= 0) {
+                    this.printValue(el);
+                    return;
+                }
+
+                for (var i = 0; i < el.children.length; i++) {
+                    this.printValue(el);
+                    const child = el.children[i];
+                    this.walk(child);
+                }
+
+            }
+        }
+
+        // var dw = new DeepWalk(root);
+        // dw.start();
+
+
+
+        function walk1(root) {
+
+            const list = [];
+            return function () {
+                return (function walk(node, list) {
+                    list.push(node);
+                    for (let i = 0; i < node.children.length; i++) {
+                        walk(node.children[i], list);
+                    }
+                    return list;
+                })(root, list)
+
+            }
+
+        }
+
+        // walk1(root)().forEach(n => console.log(n.dataset.value));
+
+
+        function walk2(root) {
+
+            const list = [];
+            return function () {
+                return (function walk(node, list) {
+                    list.push(node);
+                    for (let i = 0; i < node.children.length; i++) {
+                        list.concat(walk(node.children[i], list));
+                    }
+                    return list;
+                })(root, list)
+
+            }
+
+        }
+
+        // walk2(root)().forEach(n => console.log(n.dataset.value));
+
+
+        // 非递归, 压栈出栈
+        let walk3 = (node) => {
+            let stack = []
+            let nodes = []
+            if (node) {
+                // 推入当前处理的node
+                stack.push(node)
+                while (stack.length) {
+                    let item = stack.pop()
+                    let children = item.children
+                    nodes.push(item)
+                    // node = [] stack = [parent]
+                    // node = [parent] stack = [child3,child2,child1]
+                    // node = [parent, child1] stack = [child3,child2,child1-2,child1-1]
+                    // node = [parent, child1-1] stack = [child3,child2,child1-2]
+                    for (let i = children.length - 1; i >= 0; i--) {
+                        stack.push(children[i])
+                    }
+                }
+            }
+            return nodes
+        }
+
+        walk3(root).forEach(n => console.log(n.dataset.value));
+
+    </script>
+
+
+</body>
+
+</html>

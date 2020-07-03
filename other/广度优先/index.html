@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深度遍历</title>
+</head>
+
+<body>
+
+    <div id="deep" data-value="root">
+        <div data-value="child-1">
+            <div data-value="child-1-1">
+                <div data-value="child-1-1-1">
+                    <div data-value="child-1-1-1-1">
+                        <div data-value="child-1-1-1-1-1"></div>
+                    </div>
+                </div>
+                <div data-value="child-1-1-2"></div>
+            </div>
+            <div data-value="child-1-2"></div>
+        </div>
+        <div data-value="child-2">
+            <div data-value="child-2-1"></div>
+            <div data-value="child-2-2"></div>
+        </div>
+    </div>
+
+
+    <script>
+
+        const root = document.getElementById("deep");
+        function walk1(root) {
+            const list = [];
+            let deep = 0;
+            root.dataset.deep = 0;
+            return function () {
+                return (function walk(node, list) {
+                    for (let i = 0; i < node.children.length; i++) {
+                        const child = node.children[i];
+                        if (child.dataset.walked != "1") {
+                            child.dataset.walked = "1";
+                            list.push(child);
+                        }
+                    }
+
+                    for (let i = 0; i < node.children.length; i++) {
+                        walk(node.children[i], list);
+                    }
+
+                    return list;
+                })(root, list)
+
+            }
+        }
+
+        walk1(root)().forEach(n => console.log(n.dataset.value));
+
+    </script>
+
+
+</body>
+
+</html>

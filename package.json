@@ -1,0 +1,26 @@
+{
+  "name": "manu-scripts",
+  "version": "1.0.0",
+  "description": "大致分为  * 手写工具函数 * 手写常见ES6 API * 手写小型库 * 手写类react, vue",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiangwenhu/manu-scripts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xiangwenhu/manu-scripts/issues"
+  },
+  "homepage": "https://github.com/xiangwenhu/manu-scripts#readme",
+  "devDependencies": {
+    "promises-aplus-tests": "^2.1.2"
+  }
+}
